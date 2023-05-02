@@ -5,40 +5,56 @@ let time = prompt('Введите дату в формате YYYY-MM-DD', '');
 
 let appData = {
     budget: money,
-    time: time,
+    timeData: time,
     expenses: {},
     optionalExpenses: {},
-    income: '',
+    income: [],
     savings: false,
 };
 
 //внесение обязательных расходов
 function expenses() {
-    let i = 0;
-    do {
-        let a = prompt('Введите обязательную статью расходов в этом месяце', '');
-        if (a != '' && a != null  ) {
-            let b = +prompt('Во сколько обойдется?', '');
-            if (b != '' && b != null && isNaN(b) == false) {
-                appData.expenses[a] = b;
-                i++;
-            }  else {
-                do {
-                    b = +prompt('Во сколько обойдется?', '');
-                } while (b != '' && b != null && isNaN(b) == false);
+    //==============================
+    //1 вар цикла
+    // let i = 0;
+    // do {
+    //     let a = prompt('Введите обязательную статью расходов в этом месяце', ''),
+    //         b = +prompt('Во сколько обойдется?', '');
+    //         i++;
+    //     if (a != '' && typeof(a) != null && b != '' && typeof(b) != null && isNaN(b) == false ) {
+    //         appData.expenses[a] = b;      
+    //     } else {
+    //         i--;
+    //     }      
+    // } while (i < 2);
+    //===============================
+    //2 вар цикла
+    for (let i = 0; i < 2; i++) {
+        let a = prompt('Введите обязательную статью расходов в этом месяце', ''),
+            b = +prompt('Во сколько обойдется?', '');
+            if (a != '' && typeof(a) != null && typeof(a) === 'string' && b != '' && typeof(b) != null) {
+                appData.expenses[a] = b;          
+            } else {
+                --i;
             }
-        }       
-    } while (i < 2);
+    }
 }
 expenses();
 
-
 //расчет бюджета на 1 день
-function oneDayBudget () {
-    let oneDay = appData.budget / 30;
-    return oneDay;
+appData.budgetPerDay = appData.budget / 30;
+alert('Ваш ежедневный бюджет: ' + appData.budgetPerDay);
+
+//характеристика уровня дохода
+if (appData.budgetPerDay < 100) {
+    console.log('Минимальный уровень достатка');
+} else if (2000 > appData.budgetPerDay >= 100  ) {
+    console.log('Средний уровень достатка');
+} else if (appData.budgetPerDay >= 2000) {
+    console.log('Высокий уровень достатка');
+} else {
+    console.log('error');
 }
 
-alert(oneDayBudget ());
-
 console.log(appData);
+
