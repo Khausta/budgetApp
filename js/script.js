@@ -56,5 +56,19 @@ if (appData.budgetPerDay < 100) {
     console.log('error');
 }
 
+function optionalExpenses() {
+    for (let i = 1; i < 4; i++) {
+        let a = prompt('Статья необязательных расходов?', '');
+            if (a != '' && typeof(a) != null && typeof(a) === 'string') {
+                appData.optionalExpenses[i] = a;          
+            } else {
+                --i;
+            }
+    }
+}
+
+optionalExpenses();
+
+
 console.log(appData);
 
